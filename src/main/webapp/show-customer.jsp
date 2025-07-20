@@ -136,7 +136,6 @@
         }
     %>
 </table>
-
 <a class="back-link" href="main-menu.jsp">← Back to Home</a>
 
 </body>

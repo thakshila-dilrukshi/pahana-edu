@@ -2,6 +2,7 @@ package com.icbt.servlet;
 
 import com.icbt.model.Customer;
 import com.icbt.service.CustomerService;
+import com.icbt.util.DBConnection;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -75,8 +76,6 @@ public class CustomerServlet extends HttpServlet {
             response.sendRedirect("CustomerServlet");
             return;
         }
-
-        // Default behavior: load customer list
         List<Customer> customerList = customerService.getAllCustomers();
         request.setAttribute("customers", customerList);
         request.getRequestDispatcher("show-customer.jsp").forward(request, response);

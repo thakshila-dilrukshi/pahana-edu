@@ -100,6 +100,5 @@
 
     <a href="show-customer.jsp" class="back-link">← Back to Customer List</a>
 </div>
-
 </body>
 </html>

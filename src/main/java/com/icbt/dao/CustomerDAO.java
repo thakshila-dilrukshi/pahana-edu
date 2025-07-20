@@ -53,7 +53,6 @@ public class CustomerDAO {
         }
         return false;
     }
-
     public List<Customer> getAllCustomers() {
         List<Customer> customers = new ArrayList<>();
         String sql = "SELECT * FROM customers";
