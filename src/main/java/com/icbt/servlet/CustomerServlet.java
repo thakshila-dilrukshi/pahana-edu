@@ -10,18 +10,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/CustomerServlet")
-
-
 public class CustomerServlet extends HttpServlet {
-    private CustomerService customerService = new CustomerService();
+    private final CustomerService customerService = new CustomerService();
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -53,15 +48,34 @@ public class CustomerServlet extends HttpServlet {
         }
 
         if (success) {
-            response.sendRedirect("main-menu.jsp");
+            response.sendRedirect("CustomerServlet");
         } else {
             response.sendRedirect("error.jsp");
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        String mode = request.getParameter("mode");
+
+        if ("delete".equals(mode)) {
+            String accNumStr = request.getParameter("accountNumber");
+
+            try {
+                int accountNumber = Integer.parseInt(accNumStr);
+                customerService.deleteCustomer(accountNumber);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                response.sendRedirect("error.jsp");
+                return;
+            }
+
+            // After deletion, redirect back to the customer list
+            response.sendRedirect("CustomerServlet");
+            return;
+        }
         List<Customer> customerList = customerService.getAllCustomers();
         request.setAttribute("customers", customerList);
         request.getRequestDispatcher("show-customer.jsp").forward(request, response);
