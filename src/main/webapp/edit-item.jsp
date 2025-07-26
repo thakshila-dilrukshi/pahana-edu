@@ -54,7 +54,7 @@
         input[type="submit"] {
             width: 100%;
             padding: 12px;
-            background-color: #28a745;
+            background-color: #007bff;
             color: #ffffff;
             border: none;
             border-radius: 6px;
@@ -64,7 +64,7 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #218838;
+            background-color: #007bff;
         }
 
         .back-link {
@@ -102,7 +102,7 @@
         <input type="submit" value="Update Item">
     </form>
 
-    <a class="back-link" href="manage-items.jsp">← Back to Item List</a>
+    <a class="back-link" href="ItemServlet">← Back to Item List</a>
 </div>
 
 </body>
