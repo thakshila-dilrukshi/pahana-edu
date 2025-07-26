@@ -53,9 +53,9 @@
     <h2>Welcome, <%= user.getUsername() %></h2>
     <a href="add-new-customer.jsp">Add New Customer</a>
     <a href="CustomerServlet">Customer Details</a>
-    <a href="ManageItems.jsp">Manage Items</a>
+    <a href="ItemServlet">Manage Items</a>
     <a href="DisplayAccount.jsp">Display Account Details</a>
-    <a href="GenerateBill.jsp">Calculate & Print Bill</a>
+    <a href="BillServlet">Calculate & Print Bill</a>
     <a href="Help.jsp">Help</a>
     <a href="LogoutServlet">Logout</a>
 </div>
