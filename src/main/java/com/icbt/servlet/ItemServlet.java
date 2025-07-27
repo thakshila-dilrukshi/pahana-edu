@@ -24,8 +24,8 @@ public class ItemServlet extends HttpServlet  {
         String item_idStr = request.getParameter("item_id");
         String item_name = request.getParameter("item_name");
         String item_description = request.getParameter("item_description");
-        String unit_price = request.getParameter("unit_price");
-        String stock_quantity = request.getParameter("stock_quantity");
+        Double unit_price = Double.valueOf(request.getParameter("unit_price"));
+        Double stock_quantity = Double.valueOf(request.getParameter("stock_quantity"));
 
         Item item = new Item();
         item.setItem_name(item_name);
