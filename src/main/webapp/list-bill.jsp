@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.*, com.icbt.model.Bill" %>
+<%@ page import="java.util.*, com.icbt.model.Bill, com.icbt.model.BillItem" %>
+<%@ page import="com.icbt.model.Item" %>
 <%
   List<Bill> bills = (List<Bill>) request.getAttribute("bills");
+  List<Item> allItems = (List<Item>) request.getAttribute("items");
+  Map<Integer, List<BillItem>> billItemsMap = (Map<Integer, List<BillItem>>) request.getAttribute("billItemsMap");
 %>
 <!DOCTYPE html>
 <html>
@@ -59,6 +62,7 @@
       padding: 14px 18px;
       text-align: center;
       border-bottom: 1px solid #e0e0e0;
+      vertical-align: top;
     }
 
     th {
@@ -86,6 +90,15 @@
       margin-bottom: 25px;
     }
 
+    ul.item-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    ul.item-list li {
+      margin-bottom: 6px;
+    }
   </style>
 </head>
 <body>
@@ -102,6 +115,7 @@
     <th>Account Number</th>
     <th>Total Amount</th>
     <th>Bill Date</th>
+    <th>Items</th> <!-- New Column -->
     <th>Actions</th>
   </tr>
 
@@ -113,6 +127,32 @@
     <td><%= bill.getAccountNumber() %></td>
     <td><%= bill.getTotalAmount() %></td>
     <td><%= bill.getBillDate() %></td>
+    <td>
+      <%
+        List<BillItem> items = billItemsMap.get(bill.getBillId());
+        if (items != null && !items.isEmpty()) {
+      %>
+      <ul class="item-list">
+        <% for (BillItem item : items ){
+          String itemName = "";
+          for (Item i : allItems){
+            if( i.getItem_id() == item.getItemId()){
+              itemName = i.getItemName();
+            }
+          }
+        %>
+        <li>
+          Item ID: <%= item.getItemId() %></li>
+        <li> Item Name: <%= itemName%></li>
+        <li> Quantity: <%= item.getQuantity() %></li>
+         <li> Price: <%= item.getPrice() %>
+        </li>
+        <% } %>
+      </ul>
+      <% } else { %>
+      No items
+      <% } %>
+    </td>
     <td class="actions">
       <a class="btn"
          href="BillServlet?action=edit&id=<%= bill.getBillId() %>&accountNumber=<%= bill.getAccountNumber() %>&totalAmount=<%= bill.getTotalAmount() %>&billDate=<%= bill.getBillDate() %>">
@@ -125,12 +165,9 @@
       </a>
     </td>
   </tr>
-  <%
-    }
-  } else {
-  %>
+  <% } } else { %>
   <tr>
-    <td colspan="5" style="text-align:center;">No bills available.</td>
+    <td colspan="6" style="text-align:center;">No bills available.</td>
   </tr>
   <% } %>
 </table>

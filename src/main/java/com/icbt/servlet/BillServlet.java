@@ -65,7 +65,16 @@ public class BillServlet extends HttpServlet {
                 }
             } else {
                 List<Bill> bills = billService.getAllBills();
+                Map<Integer, List<BillItem>> billItemsMap = new HashMap<>();
+
+                for (Bill bill : bills) {
+                    List<BillItem> items = billItemService.getBillItemsByBillId(bill.getBillId());
+                    billItemsMap.put(bill.getBillId(), items);
+                }
+                List<Item>  allItems = itemService.getAllItems();
+                request.setAttribute("items", allItems);
                 request.setAttribute("bills", bills);
+                request.setAttribute("billItemsMap", billItemsMap);
                 request.getRequestDispatcher("list-bill.jsp").forward(request, response);
             }
         } catch (Exception e) {
