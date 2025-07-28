@@ -15,7 +15,7 @@
 <form id="confirmForm" action="BillServlet" method="post">
     <input type="hidden" name="action" value="confirm" />
     <input type="hidden" name="billId" value="<%= bill.getBillDate() %>" />
-    <button type="button" onclick="confirmSave()">Confirm</button>
+    <a class="back-link" href="BillServlet">← Back to Home</a>
 </form>
 
 <script>

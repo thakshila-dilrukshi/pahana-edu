@@ -13,9 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @WebServlet("/BillServlet")
 public class BillServlet extends HttpServlet {
@@ -27,114 +25,135 @@ public class BillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         String action = request.getParameter("action");
 
-        if ("new".equals(action)) {
-            // Load new bill form
-            List<Item> items = itemService.getAllItems();
-            List<Customer> customers = customerService.getAllCustomers();
-            request.setAttribute("items", items);
-            request.setAttribute("customers", customers);
-            request.getRequestDispatcher("add-bill.jsp").forward(request, response);
-        } else {
-            // Default: list all bills
-            List<Bill> bills = billService.getAllBills();
-            request.setAttribute("bills", bills);
-            request.getRequestDispatcher("list-bill.jsp").forward(request, response);
+        try {
+            if (action != null) {
+                switch (action) {
+                    case "new":
+                        List<Item> items = itemService.getAllItems();
+                        List<Customer> customers = customerService.getAllCustomers();
+                        request.setAttribute("items", items);
+                        request.setAttribute("customers", customers);
+                        request.getRequestDispatcher("add-bill.jsp").forward(request, response);
+                        break;
+
+                    case "edit":
+                        int editId = Integer.parseInt(request.getParameter("id"));
+                        Bill billToEdit = billService.getBillById(editId);
+                        List<BillItem> billItems = billItemService.getBillItemsByBillId(editId);
+                        List<Item> allItems = itemService.getAllItems();
+                        List<Customer> allCustomers = customerService.getAllCustomers();
+
+                        request.setAttribute("bill", billToEdit);
+                        request.setAttribute("billItems", billItems);
+                        request.setAttribute("items", allItems);
+                        request.setAttribute("customers", allCustomers);
+                        request.getRequestDispatcher("edit-bill.jsp").forward(request, response);
+                        break;
+
+
+                    case "delete":
+                        int deleteId = Integer.parseInt(request.getParameter("id"));
+                        billItemService.getBillItemsByBillId(deleteId).forEach(item -> billItemService.deleteBillItem(item.getBillItemId()));
+                        billService.deleteBill(deleteId);
+                        response.sendRedirect("BillServlet");
+                        break;
+
+                    default:
+                        response.sendRedirect("error.jsp");
+                }
+            } else {
+                List<Bill> bills = billService.getAllBills();
+                request.setAttribute("bills", bills);
+                request.getRequestDispatcher("list-bill.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("error.jsp");
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html");
-
-        String action = request.getParameter("action");
 
         try {
-            if ("confirm".equals(action)) {
-                System.out.println("Thakshila moday");
-                // Action from confirm-bill.jsp - save the bill and items
+            String formAction = request.getParameter("formAction");
+            String customerIdParam = request.getParameter("customer_id");
+            String[] itemIds = request.getParameterValues("itemId[]");
+            String[] quantities = request.getParameterValues("quantity[]");
+            String[] prices = request.getParameterValues("price[]");
 
-                String customerIdStr = request.getParameter("customerId");
-                String itemIdStr = request.getParameter("itemId");
-                String quantityStr = request.getParameter("quantity");
+            if (customerIdParam == null || itemIds == null || quantities == null || prices == null
+                    || itemIds.length != quantities.length || itemIds.length != prices.length) {
+                response.sendRedirect("error.jsp");
+                return;
+            }
 
-                if (customerIdStr == null || itemIdStr == null || quantityStr == null
-                        || customerIdStr.isEmpty() || itemIdStr.isEmpty() || quantityStr.isEmpty()) {
-                    response.sendRedirect("error.jsp");
-                    return;
-                }
+            int accountNumber = Integer.parseInt(customerIdParam);
+            List<BillItem> billItems = new ArrayList<>();
+            double totalAmount = 0;
 
-                int customerId = Integer.parseInt(customerIdStr);
-                int itemId = Integer.parseInt(itemIdStr);
-                int quantity = Integer.parseInt(quantityStr);
+            for (int i = 0; i < itemIds.length; i++) {
+                int itemId = Integer.parseInt(itemIds[i]);
+                int quantity = Integer.parseInt(quantities[i]);
+                double price = Double.parseDouble(prices[i]);
 
-                // Get item price from DB to calculate total
-                Item item = itemService.getItemById(itemId);
-                if (item == null) {
-                    response.sendRedirect("error.jsp");
-                    return;
-                }
-                double price = item.getUnit_price();
-                double totalAmount = price * quantity;
+                BillItem item = new BillItem();
+                item.setItemId(itemId);
+                item.setQuantity(quantity);
+                item.setPrice(price);
+                billItems.add(item);
 
-                // Create Bill object
+                totalAmount += quantity * price;
+            }
+
+            if ("update".equalsIgnoreCase(formAction)) {
+                int billId = Integer.parseInt(request.getParameter("billId"));
                 Bill bill = new Bill();
-                bill.setAccountNumber(customerId);
-                bill.setBillDate(new Date());
+                bill.setBillId(billId);
+                bill.setAccountNumber(accountNumber);
                 bill.setTotalAmount(totalAmount);
-                bill.setConfirmed(false);
+                bill.setBillDate(new Date());
 
-                // Save Bill
-                int savedBillId = billService.addBill(bill);
-                if (savedBillId <= 0) {
+                boolean updated = billService.updateBill(bill);
+                if (updated) {
+                    billItemService.getBillItemsByBillId(billId).forEach(item -> billItemService.deleteBillItem(item.getBillItemId()));
+                    for (BillItem item : billItems) {
+                        item.setBillId(billId);
+                    }
+                    billItemService.saveBillItems(billItems);
+
+                    request.setAttribute("bill", bill);
+                    request.setAttribute("billItems", billItems);
+                    request.getRequestDispatcher("confirm-bill.jsp").forward(request, response);
+                } else {
                     response.sendRedirect("error.jsp");
-                    return;
                 }
-
-                // Create BillItem and save
-                BillItem billItem = new BillItem();
-                billItem.setBillId(savedBillId);
-                billItem.setItemId(itemId);
-                billItem.setQuantity(quantity);
-                billItem.setPrice(price);
-
-                List<BillItem> items = new ArrayList<>();
-                items.add(billItem);
-
-                billItemService.saveBillItems(items);
-
-                // Redirect to confirmation page with saved bill id
-                response.sendRedirect("BillServlet?action=show&id=" + savedBillId);
-
-            } else if ("show".equals(action)) {
-                // Show single bill confirmation or details (optional)
-
-                String idParam = request.getParameter("id");
-                if (idParam == null || idParam.isEmpty()) {
-                    response.sendRedirect("BillServlet");
-                    return;
-                }
-                int billId = Integer.parseInt(idParam);
-
-                Bill bill = billService.getBillById(billId);
-                if (bill == null) {
-                    response.sendRedirect("BillServlet");
-                    return;
-                }
-
-                request.setAttribute("bill", bill);
-                // You can load bill items if needed and pass as attribute
-                request.getRequestDispatcher("confirm-bill.jsp").forward(request, response);
 
             } else {
-                System.out.println("Uvindu MOday");
-                // Unknown action: redirect to bill list
-                response.sendRedirect("BillServlet");
+                // Add new bill
+                Bill bill = new Bill();
+                bill.setAccountNumber(accountNumber);
+                bill.setTotalAmount(totalAmount);
+                bill.setBillDate(new Date());
+
+                int billId = billService.addBill(bill);
+                if (billId > 0) {
+                    for (BillItem item : billItems) {
+                        item.setBillId(billId);
+                    }
+                    billItemService.saveBillItems(billItems);
+                    bill.setBillId(billId);
+
+                    request.setAttribute("bill", bill);
+                    request.setAttribute("billItems", billItems);
+                    request.getRequestDispatcher("confirm-bill.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("error.jsp");
+                }
             }
 
         } catch (Exception e) {

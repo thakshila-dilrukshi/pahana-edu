@@ -44,7 +44,7 @@ public class BillItemDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     BillItem item = new BillItem();
-                    item.setBillItemId(rs.getInt("bill_item_id"));
+                    item.setBillItemId(rs.getInt("id"));
                     item.setBillId(rs.getInt("bill_id"));
                     item.setItemId(rs.getInt("item_id"));
                     item.setQuantity(rs.getInt("quantity"));
@@ -62,7 +62,7 @@ public class BillItemDAO {
 
     // Update a single bill item
     public boolean updateBillItem(BillItem item) {
-        String sql = "UPDATE bill_items SET bill_id = ?, item_id = ?, quantity = ?, price = ? WHERE bill_item_id = ?";
+        String sql = "UPDATE bill_items SET bill_id = ?, item_id = ?, quantity = ?, price = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -81,7 +81,7 @@ public class BillItemDAO {
 
     // Delete a bill item by bill_item_id
     public boolean deleteBillItem(int billItemId) {
-        String sql = "DELETE FROM bill_items WHERE bill_item_id = ?";
+        String sql = "DELETE FROM bill_items WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -104,7 +104,7 @@ public class BillItemDAO {
 
             while (rs.next()) {
                 BillItem item = new BillItem();
-                item.setBillItemId(rs.getInt("bill_item_id"));
+                item.setBillItemId(rs.getInt("id"));
                 item.setBillId(rs.getInt("bill_id"));
                 item.setItemId(rs.getInt("item_id"));
                 item.setQuantity(rs.getInt("quantity"));

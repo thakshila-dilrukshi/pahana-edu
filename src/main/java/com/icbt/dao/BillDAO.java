@@ -31,7 +31,7 @@ public class BillDAO {
 
     // Update an existing bill
     public boolean updateBill(Bill bill) {
-        String sql = "UPDATE bills SET account_number = ?, total_amount = ? WHERE bill_id = ?";
+        String sql = "UPDATE bills SET account_number = ?, total_amount = ? WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -48,7 +48,7 @@ public class BillDAO {
 
     // Delete a bill by ID
     public boolean deleteBill(int billId) {
-        String sql = "DELETE FROM bills WHERE bill_id = ?";
+        String sql = "DELETE FROM bills WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -74,6 +74,7 @@ public class BillDAO {
                 bill.setBillId(rs.getInt("id"));
                 bill.setAccountNumber(rs.getInt("account_number"));
                 bill.setTotalAmount(rs.getDouble("total_amount"));
+                bill.setBillDate(rs.getTimestamp("bill_date"));
                 bills.add(bill);
             }
         } catch (Exception e) {
@@ -85,7 +86,7 @@ public class BillDAO {
 
     // Get a bill by its ID
     public Bill getBillById(int billId) {
-        String sql = "SELECT * FROM bills WHERE bill_id = ?";
+        String sql = "SELECT * FROM bills WHERE id = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
@@ -94,9 +95,10 @@ public class BillDAO {
 
             if (rs.next()) {
                 Bill bill = new Bill();
-                bill.setBillId(rs.getInt("bill_id"));
+                bill.setBillId(rs.getInt("id"));
                 bill.setAccountNumber(rs.getInt("account_number"));
                 bill.setTotalAmount(rs.getDouble("total_amount"));
+                bill.setBillDate(rs.getTimestamp("bill_date"));
                 return bill;
             }
         } catch (Exception e) {
