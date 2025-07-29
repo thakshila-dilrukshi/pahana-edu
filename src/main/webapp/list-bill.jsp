@@ -13,31 +13,37 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f7fa;
+      background-color: #f2f2f2;
       padding: 40px;
       color: #333;
     }
 
     h2 {
       text-align: center;
-      color: #444;
+      color: #222;
       margin-bottom: 30px;
-      font-size: 28px;
+      font-size: 26px;
+    }
+
+    .top-bar {
+      text-align: center;
+      margin-bottom: 20px;
     }
 
     .btn {
       display: inline-block;
-      padding: 10px 16px;
-      background-color: #3a7bd5;
-      color: #fff;
+      padding: 8px 14px;
+      background-color: rgba(155, 104, 209, 0.95);
+      color: white;
       text-decoration: none;
-      border-radius: 5px;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
+      border-radius: 4px;
+      font-size: 13px;
+      transition: 0.2s ease;
+      border: none;
     }
 
     .btn:hover {
-      background-color: #285ea8;
+      background-color: #865baa;
     }
 
     .btn-danger {
@@ -49,55 +55,65 @@
     }
 
     table {
-      width: 95%;
-      margin: auto;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
       border-collapse: collapse;
-      background-color: #ffffff;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    th, td {
-      padding: 14px 18px;
-      text-align: center;
-      border-bottom: 1px solid #e0e0e0;
-      vertical-align: top;
+      background-color: #fff;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     th {
-      background-color: #3a7bd5;
-      color: #fff;
-      font-weight: normal;
+      background-color: #745f9e;
+      color: white;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-size: 12px;
+      padding: 12px;
     }
 
-    tr:hover {
-      background-color: #f1f1f1;
+    td {
+      padding: 14px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafa;
     }
 
     .actions a {
-      margin-right: 8px;
-    }
-
-    .actions form {
-      display: inline;
-    }
-
-    .top-bar {
-      text-align: center;
-      margin-bottom: 25px;
+      margin: 4px;
     }
 
     ul.item-list {
-      list-style-type: none;
-      padding-left: 0;
+      padding: 0;
       margin: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
     }
 
-    ul.item-list li {
-      margin-bottom: 6px;
+    ul.item-list li.item-box {
+      background-color: #f8f9fa;
+      border: 1px solid #dcdcdc;
+      padding: 10px 12px;
+      border-radius: 5px;
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .item-box span {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    td[colspan] {
+      text-align: center;
+      font-style: italic;
+      color: #888;
     }
   </style>
 </head>
@@ -106,7 +122,7 @@
 <h2>Bill List</h2>
 
 <div class="top-bar">
-  <a class="btn" href="BillServlet?action=new">+ Create New Bill</a>
+  <a class="btn" href="BillServlet?action=new">+ Add New Bill</a>
 </div>
 
 <table>
@@ -115,7 +131,7 @@
     <th>Account Number</th>
     <th>Total Amount</th>
     <th>Bill Date</th>
-    <th>Items</th> <!-- New Column -->
+    <th>Items</th>
     <th>Actions</th>
   </tr>
 
@@ -133,19 +149,20 @@
         if (items != null && !items.isEmpty()) {
       %>
       <ul class="item-list">
-        <% for (BillItem item : items ){
+        <% for (BillItem item : items) {
           String itemName = "";
-          for (Item i : allItems){
-            if( i.getItem_id() == item.getItemId()){
+          for (Item i : allItems) {
+            if (i.getItem_id() == item.getItemId()) {
               itemName = i.getItemName();
+              break;
             }
           }
         %>
-        <li>
-          Item ID: <%= item.getItemId() %></li>
-        <li> Item Name: <%= itemName%></li>
-        <li> Quantity: <%= item.getQuantity() %></li>
-         <li> Price: <%= item.getPrice() %>
+        <li class="item-box">
+          <span><strong>Item ID:</strong> <%= item.getItemId() %></span>
+          <span><strong>Item Name:</strong> <%= itemName %></span>
+          <span><strong>Quantity:</strong> <%= item.getQuantity() %></span>
+          <span><strong>Price:</strong> <%= item.getPrice() %></span>
         </li>
         <% } %>
       </ul>
@@ -167,10 +184,11 @@
   </tr>
   <% } } else { %>
   <tr>
-    <td colspan="6" style="text-align:center;">No bills available.</td>
+    <td colspan="6">No bills available.</td>
   </tr>
   <% } %>
 </table>
+<a class="logout-link" href="main-menu.jsp">Back to main menu</a>
 
 </body>
 </html>
