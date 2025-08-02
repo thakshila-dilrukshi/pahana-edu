@@ -1,7 +1,6 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page session="true" %>
-<%@ page import ="com.icbt.model.User" %>
+<%@ page import="com.icbt.model.User" %>
 <%
     User user = (User) session.getAttribute("user");
     if (user == null) {
@@ -16,48 +15,79 @@
     <title>Pahana Edu - Main Menu</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #eef2f3;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .menu-container {
+            background-color: #ffffff;
             padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
         }
-        .menu {
-            max-width: 400px;
-            margin: auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px gray;
-        }
+
         h2 {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            color: #333;
         }
-        .menu a {
-            display: block;
-            padding: 12px;
-            margin: 8px 0;
-            text-decoration: none;
-            background-color: #2e8b57;
-            color: white;
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .menu-grid a {
             text-align: center;
-            border-radius: 5px;
+            padding: 15px 10px;
+            background-color: rgba(155, 104, 209, 0.95);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
         }
-        .menu a:hover {
-            background-color: #246b46;
+
+        .menu-grid a:hover {
+            background-color: #865baa;
+        }
+
+        .logout-link {
+            margin-top: 25px;
+            display: block;
+            text-align: center;
+            color: #f44336;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .logout-link:hover {
+            color: #c62828;
         }
     </style>
 </head>
 <body>
 
-<div class="menu">
+<div class="menu-container">
     <h2>Welcome, <%= user.getUsername() %></h2>
-    <a href="add-new-customer.jsp">Add New Customer</a>
-    <a href="CustomerServlet">Customer Details</a>
-    <a href="ItemServlet">Manage Items</a>
-    <a href="DisplayAccount.jsp">Display Account Details</a>
-    <a href="BillServlet">Calculate & Print Bill</a>
-    <a href="Help.jsp">Help</a>
-    <a href="LogoutServlet">Logout</a>
+    <div class="menu-grid">
+        <a href="add-new-customer.jsp">Add Customer</a>
+        <a href="CustomerServlet">Customer Details</a>
+        <a href="ItemServlet">Manage Items</a>
+        <a href="DisplayAccount.jsp">Display Account Details</a>
+        <a href="BillServlet">Print Bill</a>
+        <a href="help.jsp">Help</a>
+    </div>
+    <a class="logout-link" href="login.jsp">Logout</a>
 </div>
 
 </body>

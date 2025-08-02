@@ -18,8 +18,8 @@ public class ItemDAO {
 
             stmt.setString(1, item.getItem_name());
             stmt.setString(2, item.getItem_description());
-            stmt.setString(3, item.getUnit_price());
-            stmt.setString(4, item.getStock_quantity());
+            stmt.setDouble(3, item.getUnit_price());
+            stmt.setDouble(4, item.getStock_quantity());
 
 
             int rowsInserted = stmt.executeUpdate();
@@ -36,8 +36,8 @@ public class ItemDAO {
 
             stmt.setString(1, item.getItem_name());
             stmt.setString(2, item.getItem_description());
-            stmt.setString(3, item.getUnit_price());
-            stmt.setString(4, item.getStock_quantity());
+            stmt.setDouble(3, item.getUnit_price());
+            stmt.setDouble(4, item.getStock_quantity());
             stmt.setInt(5, item.getItem_id());
 
             return stmt.executeUpdate() > 0;
@@ -59,8 +59,8 @@ public class ItemDAO {
                 i.setItem_id(rs.getInt("item_id"));
                 i.setItem_name(rs.getString("item_name"));
                 i.setItem_description(rs.getString("item_description"));
-                i.setUnit_price(rs.getString("unit_price"));
-                i.setStock_quantity(rs.getString("stock_quantity"));
+                i.setUnit_price(rs.getDouble("unit_price"));
+                i.setStock_quantity(rs.getDouble("stock_quantity"));
                 items.add(i);
             }
         } catch (Exception e) {
