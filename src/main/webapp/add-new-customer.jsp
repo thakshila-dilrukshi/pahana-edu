@@ -63,8 +63,10 @@
         <input type="text" id="telephone" name="telephone">
 
         <input type="submit" value="Register Customer">
+        <a class="logout-link" href="main-menu.jsp">Back to main menu</a>
     </form>
 </div>
+
 
 </body>
 </html>

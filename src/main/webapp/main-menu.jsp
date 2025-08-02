@@ -61,17 +61,12 @@
             background-color: #865baa;
         }
 
-        .logout-link {
-            margin-top: 25px;
-            display: block;
-            text-align: center;
-            color: #f44336;
-            text-decoration: none;
-            font-weight: bold;
+        .logout-button {
+            background-color: rgba(155, 104, 209, 0.95) !important;
         }
 
-        .logout-link:hover {
-            color: #c62828;
+        .logout-button:hover {
+            background-color: #3b2c67 !important;
         }
     </style>
 </head>
@@ -86,8 +81,8 @@
         <a href="DisplayAccount.jsp">Display Account Details</a>
         <a href="BillServlet">Print Bill</a>
         <a href="help.jsp">Help</a>
+        <a href="LogoutServlet" class="logout-button" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
     </div>
-    <a class="logout-link" href="login.jsp">Logout</a>
 </div>
 
 </body>
