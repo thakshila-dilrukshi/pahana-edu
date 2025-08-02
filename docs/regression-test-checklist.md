@@ -18,55 +18,50 @@
 
 ## ✅ Full System Regression Test
 
-| Module              | Test Case Description                   | Status          |
-|---------------------|-----------------------------------------|-----------------|
-| Login               | Valid & invalid login flow              | ☐ Pass / ☐ Fail |
-| Logout              | Logout clears session properly          | ☐ Pass / ☐ Fail |
-| Customer Management | Full CRUD + UI feedback                 | ☐ Pass / ☐ Fail |
-| Item Management     | Full CRUD + price and category handling | ☐ Pass / ☐ Fail |
-| Billing Module      | Create multiple bills with mixed items  | ☐ Pass / ☐ Fail |
-| Billing Module      | Calculate correct totals                | ☐ Pass / ☐ Fail |
-| Help Page           | Loads with instructions for each module | ☐ Pass / ☐ Fail |
-| Navigation          | Links work across dashboard and sidebar | ☐ Pass / ☐ Fail |
-| UI Theme            | Dark theme applied globally             | ☐ Pass / ☐ Fail |
+| Module              | Test Case Description                   | Status |
+|---------------------|-----------------------------------------|--|
+| Login               | Valid & invalid login flow              | ✅ Pass |
+| Logout              | Logout clears session properly          | ✅ Pass |
+| Customer Management | Full CRUD + UI feedback                 | ✅ Pass |
+| Item Management     | Full CRUD + price and category handling | ✅ Pass |
+| Billing Module      | Create multiple bills with mixed items  | ✅ Pass |
+| Billing Module      | Calculate correct totals                | ✅ Pass |
+| Help Page           | Loads with instructions for each module | ✅ Pass |
+| Navigation          | Links work across dashboard and sidebar | ✅ Pass |
+| UI Theme            | Dark theme applied globally             | ✅ Pass |
 
 ---
 
 ## 🧪 JUnit Testing
 
-| Task                                          | Status          |
-|-----------------------------------------------|-----------------|
-| All unit tests pass (`mvn test`)              | ☐ Pass / ☐ Fail |
-| No skipped or ignored test cases              | ☐ Pass / ☐ Fail |
-| Test logs clean (no unexpected output/errors) | ☐ Pass / ☐ Fail |
+| Task                                          | Status |
+|-----------------------------------------------|-|
+| All unit tests pass (`mvn test`)              | ✅ Pass |
+| No skipped or ignored test cases              | ✅ Pass|
+| Test logs clean (no unexpected output/errors) | ✅ Pass|
 
 ---
 
 ## 🛡 Security & Routing
 
-| Test Case                                            | Status          |
-|------------------------------------------------------|-----------------|
-| Protected views are not accessible without login     | ☐ Pass / ☐ Fail |
-| URLs under `WEB-INF/views` cannot be opened directly | ☐ Pass / ☐ Fail |
-| Session expiration handled gracefully                | ☐ Pass / ☐ Fail |
+| Test Case                                            | Status |
+|------------------------------------------------------|--|
+| Protected views are not accessible without login     | ✅ Pass |
+| URLs under `WEB-INF/views` cannot be opened directly | ✅ Pass |
+| Session expiration handled gracefully                | ✅ Pass |
 
 ---
 
 ## 🧼 Release Readiness
 
-| Task                                         | Status      |
-|----------------------------------------------|-------------|
-| `pom.xml` version is `1.0.0`                 | ☐ Confirmed |
-| `CHANGELOG.md` matches implemented modules   | ☐ Confirmed |
-| UI content free of typos or placeholder text | ☐ Confirmed |
-| Application is stable on final deploy test   | ☐ Confirmed |
+| Task                                         | Status |
+|----------------------------------------------|-|
+| `pom.xml` version is `1.0.0`                 |✅ Confirmed |
+| `CHANGELOG.md` matches implemented modules   |✅ Confirmed|
+| UI content free of typos or placeholder text |✅ Confirmed |
+| Application is stable on final deploy test   | ✅ Confirmed |
 
 ---
 
-## 🗒 Notes
 
-- _[List issues, bugs, or concerns]_
-
----
-
-### 🚀 Ready to Merge into `main`: ☐ Yes / ☐ No
+### 🚀 Ready to Merge into `main`: ☐ Yes
