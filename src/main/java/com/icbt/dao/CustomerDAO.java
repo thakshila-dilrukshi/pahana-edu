@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerDAO {
+
+
+
     public boolean addCustomer(Customer customer) {
         String sql = "INSERT INTO customers (name, address, telephone) VALUES (?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
@@ -19,13 +22,16 @@ public class CustomerDAO {
             stmt.setString(2, customer.getAddress());
             stmt.setString(3, customer.getTelephone());
 
-            int rowsInserted = stmt.executeUpdate();
-            return rowsInserted > 0;
+
+            return stmt.executeUpdate() > 0;
+
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
+
     public boolean updateCustomer(Customer customer) {
         String sql = "UPDATE customers SET name = ?, address = ?, telephone = ? WHERE account_number = ?";
         try (Connection con = DBConnection.getConnection();
@@ -42,17 +48,22 @@ public class CustomerDAO {
         }
         return false;
     }
+
+
     public static boolean deleteCustomer(int accountNumber) {
-        try (Connection con = DBConnection.getConnection()) {
-            String sql = "DELETE FROM customers WHERE account_number = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, accountNumber);
-            return ps.executeUpdate() > 0;
+        String sql = "DELETE FROM customers WHERE account_number = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, accountNumber);
+            return stmt.executeUpdate() > 0;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
+
     public List<Customer> getAllCustomers() {
         List<Customer> customers = new ArrayList<>();
         String sql = "SELECT * FROM customers";
@@ -62,12 +73,14 @@ public class CustomerDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Customer c = new Customer();
-                c.setAccountNumber(rs.getInt("account_number"));
-                c.setName(rs.getString("name"));
-                c.setAddress(rs.getString("address"));
-                c.setTelephone(rs.getString("telephone"));
-                customers.add(c);
+
+                Customer customer = new Customer();
+                customer.setAccountNumber(rs.getInt("account_number"));
+                customer.setName(rs.getString("name"));
+                customer.setAddress(rs.getString("address"));
+                customer.setTelephone(rs.getString("telephone"));
+                customers.add(customer);
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,4 +88,28 @@ public class CustomerDAO {
 
         return customers;
     }
+
+
+    public Customer getCustomerById(int accountNumber) {
+        String sql = "SELECT * FROM customers WHERE account_number = ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, accountNumber);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Customer customer = new Customer();
+                    customer.setAccountNumber(rs.getInt("account_number"));
+                    customer.setName(rs.getString("name"));
+                    customer.setAddress(rs.getString("address"));
+                    customer.setTelephone(rs.getString("telephone"));
+                    return customer;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
