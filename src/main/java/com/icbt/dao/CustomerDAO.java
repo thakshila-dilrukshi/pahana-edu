@@ -83,6 +83,7 @@ public class CustomerDAO {
                 customers.add(customer);
 
 
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,6 +115,7 @@ public class CustomerDAO {
         }
         return null;
     }
+
 
 
 }

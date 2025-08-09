@@ -99,8 +99,6 @@
     </form>
 </div>
 
-
-
 <script>
     function confirmSave() {
         if (confirm('Are you sure you want to confirm and save this bill?')) {
@@ -116,5 +114,6 @@
 </script>
 </body>
 </html>
+
 
 
