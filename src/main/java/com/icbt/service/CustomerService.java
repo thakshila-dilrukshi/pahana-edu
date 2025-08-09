@@ -24,4 +24,5 @@ public class CustomerService {
     public Customer getCustomyIerBd(int accountNumber) {
         return customerDAO.getCustomerById(accountNumber);
     }
+
 }

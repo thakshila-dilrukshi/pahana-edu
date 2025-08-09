@@ -2,6 +2,7 @@ package com.icbt.servlet;
 
 import com.icbt.model.Customer;
 import com.icbt.service.CustomerService;
+import com.icbt.util.DBConnection;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,11 +20,11 @@ public class CustomerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Retrieve form parameters
         String accountNumberStr = request.getParameter("accountNumber");
         String name = request.getParameter("name");
         String address = request.getParameter("address");
         String telephone = request.getParameter("telephone");
+
 
         // Basic validation
         if (name == null || name.trim().isEmpty() ||
@@ -55,7 +56,6 @@ public class CustomerServlet extends HttpServlet {
             success = false;
         }
 
-        // Redirect based on result
         if (success) {
             response.sendRedirect("CustomerServlet");
         } else {
@@ -100,3 +100,4 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 }
+
