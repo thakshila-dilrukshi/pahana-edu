@@ -18,6 +18,7 @@
 
 ## ✅ Full System Regression Test
 
+
 | Module              | Test Case Description                   | Status |
 |---------------------|-----------------------------------------|--|
 | Login               | Valid & invalid login flow              | ✅ Pass |
@@ -30,6 +31,7 @@
 | Navigation          | Links work across dashboard and sidebar | ✅ Pass |
 | UI Theme            | Dark theme applied globally             | ✅ Pass |
 
+
 ---
 
 ## 🧪 JUnit Testing
@@ -39,6 +41,7 @@
 | All unit tests pass (`mvn test`)              | ✅ Pass |
 | No skipped or ignored test cases              | ✅ Pass|
 | Test logs clean (no unexpected output/errors) | ✅ Pass|
+
 
 ---
 
@@ -50,9 +53,11 @@
 | URLs under `WEB-INF/views` cannot be opened directly | ✅ Pass |
 | Session expiration handled gracefully                | ✅ Pass |
 
+
 ---
 
 ## 🧼 Release Readiness
+
 
 | Task                                         | Status |
 |----------------------------------------------|-|
@@ -64,4 +69,5 @@
 ---
 
 
-### 🚀 Ready to Merge into `main`: ☐ Yes
+### 🚀 Ready to Merge into `main`: ✅Yes
+
