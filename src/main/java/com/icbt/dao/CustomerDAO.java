@@ -11,8 +11,6 @@ import java.util.List;
 
 public class CustomerDAO {
 
-
-
     public boolean addCustomer(Customer customer) {
         String sql = "INSERT INTO customers (name, address, telephone) VALUES (?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
@@ -25,7 +23,7 @@ public class CustomerDAO {
 
             return stmt.executeUpdate() > 0;
 
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,6 +48,7 @@ public class CustomerDAO {
     }
 
 
+
     public static boolean deleteCustomer(int accountNumber) {
         String sql = "DELETE FROM customers WHERE account_number = ?";
         try (Connection con = DBConnection.getConnection();
@@ -57,6 +56,7 @@ public class CustomerDAO {
 
             stmt.setInt(1, accountNumber);
             return stmt.executeUpdate() > 0;
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,12 +74,14 @@ public class CustomerDAO {
 
             while (rs.next()) {
 
+
                 Customer customer = new Customer();
                 customer.setAccountNumber(rs.getInt("account_number"));
                 customer.setName(rs.getString("name"));
                 customer.setAddress(rs.getString("address"));
                 customer.setTelephone(rs.getString("telephone"));
                 customers.add(customer);
+
 
             }
         } catch (Exception e) {
@@ -88,6 +90,7 @@ public class CustomerDAO {
 
         return customers;
     }
+
 
 
     public Customer getCustomerById(int accountNumber) {
@@ -111,5 +114,6 @@ public class CustomerDAO {
         }
         return null;
     }
+
 
 }

@@ -7,6 +7,7 @@
     }
 %>
 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,6 +100,7 @@
 </div>
 
 
+
 <script>
     function confirmSave() {
         if (confirm('Are you sure you want to confirm and save this bill?')) {
@@ -107,10 +109,12 @@
     }
 
 
+
     function printBill() {
         window.print();
     }
 </script>
 </body>
 </html>
+
 
