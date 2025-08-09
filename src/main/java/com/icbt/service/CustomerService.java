@@ -20,4 +20,8 @@ public class CustomerService {
     public List<Customer> getAllCustomers() {
         return customerDAO.getAllCustomers();
     }
+
+    public Customer getCustomyIerBd(int accountNumber) {
+        return customerDAO.getCustomerById(accountNumber);
+    }
 }
