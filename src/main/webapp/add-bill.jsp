@@ -55,7 +55,7 @@
     }
 
     .remove-btn {
-      background-color: #103aa7;
+      background-color: rgba(155, 104, 209, 0.95);
       color: white;
       padding: 8px 14px;
       border: none;
@@ -68,7 +68,7 @@
     }
 
     .add-btn, .submit-btn {
-      background-color: #007bff;
+      background-color: rgba(155, 104, 209, 0.95);
       color: white;
       padding: 12px 20px;
       border: none;
@@ -79,7 +79,7 @@
     }
 
     .add-btn:hover, .submit-btn:hover {
-      background-color: #0056b3;
+      background-color: rgba(155, 104, 209, 0.95);
     }
 
     .btn-group {
