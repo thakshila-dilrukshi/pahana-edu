@@ -6,6 +6,7 @@
         return;
     }
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,6 +103,7 @@
             document.getElementById('confirmForm').submit();
         }
     }
+
 
 
     function printBill() {

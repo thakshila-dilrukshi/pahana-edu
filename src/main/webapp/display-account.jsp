@@ -94,6 +94,7 @@
         }
 
         input[type="submit"]:hover {
+
             background: rgba(155, 104, 209, 0.95);
         }
 
