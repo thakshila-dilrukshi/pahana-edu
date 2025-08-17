@@ -69,7 +69,7 @@
     }
 
     input[type="submit"]:hover {
-      background-color: #3b78c6;
+      background-color: #6c5b9e;
     }
 
     .error {

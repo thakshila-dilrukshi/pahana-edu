@@ -23,7 +23,7 @@
             width: fit-content;
             margin: 0 auto 30px auto;
             padding: 12px 24px;
-            background-color: #3498db;
+            background-color: rgba(155, 104, 209, 0.95);
             color: white;
             font-weight: bold;
             text-decoration: none;
@@ -33,7 +33,7 @@
         }
 
         .add-button:hover {
-            background-color: #2980b9;
+            background-color: #865baa;
         }
 
         table {
@@ -92,7 +92,7 @@
             display: block;
             text-align: center;
             margin-top: 40px;
-            color: #2980b9;
+            color: rgba(155, 104, 209, 0.95);
             text-decoration: none;
             font-weight: bold;
         }
