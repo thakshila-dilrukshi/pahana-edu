@@ -45,7 +45,6 @@ public class CustomerDAO {
         }
         return false;
     }
-
     public static boolean deleteCustomer(int accountNumber) {
         String sql = "DELETE FROM customers WHERE account_number = ?";
         try (Connection con = DBConnection.getConnection();

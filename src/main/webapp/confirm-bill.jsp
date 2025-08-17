@@ -103,6 +103,7 @@
         }
     }
 
+
     function printBill() {
         window.print();
     }
