@@ -78,11 +78,7 @@
         <a href="add-new-customer.jsp">Add Customer</a>
         <a href="CustomerServlet">Customer Details</a>
         <a href="ItemServlet">Manage Items</a>
-
         <a href="display-account.jsp">Display Account Details</a>
-
-
-
         <a href="BillServlet">Print Bill</a>
         <a href="help.jsp">Help</a>
         <a href="LogoutServlet" class="logout-button" onclick="return confirm('Are you sure you want to logout?')">Logout</a>

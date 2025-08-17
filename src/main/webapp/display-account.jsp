@@ -54,8 +54,8 @@
             text-align: left;
             font-size: 26px;
             font-weight: 700;
-            color: #1976d2;
-            border-bottom: 2px solid #1976d2;
+            color: rgba(155, 104, 209, 0.95);
+            border-bottom: 2px solid rgba(155, 104, 209, 0.95);
             padding-bottom: 8px;
             margin-bottom: 25px;
         }
@@ -77,14 +77,14 @@
         }
 
         input[type="text"]:focus {
-            border-color: #1976d2;
-            box-shadow: 0 0 8px rgba(25,118,210,0.3);
+            border-color: rgba(155, 104, 209, 0.95);
+            box-shadow: 0 0 8px rgb(108, 91, 158);
             outline: none;
         }
 
         input[type="submit"] {
             padding: 14px 20px;
-            background: #1976d2;
+            background: rgba(155, 104, 209, 0.95);
             color: white;
             border: none;
             border-radius: 5px;
@@ -94,14 +94,14 @@
         }
 
         input[type="submit"]:hover {
-            background: #0d47a1;
+            background: rgba(155, 104, 209, 0.95);
         }
 
         /* ==== RESULT BOX ==== */
         .result {
             background: #f9fbfd;
             padding: 20px;
-            border-left: 5px solid #1976d2;
+            border-left: 5px solid #6c5b9e;
             border-radius: 6px;
         }
 
@@ -131,7 +131,7 @@
         .back-home a {
             display: inline-block;
             padding: 10px 15px;
-            background: #455a64;
+            background: rgba(155, 104, 209, 0.95);
             color: white;
             border-radius: 5px;
             text-decoration: none;

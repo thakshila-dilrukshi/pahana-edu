@@ -25,6 +25,4 @@ public class CustomerService {
         return customerDAO.getCustomerById(accountNumber);
     }
 
-
-
 }

@@ -46,7 +46,7 @@
         input[type="submit"] {
             width: 100%;
             padding: 12px;
-            background-color: #007bff;
+            background-color: rgba(155, 104, 209, 0.95);
             color: #ffffff;
             border: none;
             border-radius: 6px;
@@ -56,14 +56,14 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: rgba(155, 104, 209, 0.95);
         }
 
         .back-link {
             display: block;
             text-align: center;
             margin-top: 20px;
-            color: #007bff;
+            color: rgba(155, 104, 209, 0.95);
             text-decoration: none;
         }
 
