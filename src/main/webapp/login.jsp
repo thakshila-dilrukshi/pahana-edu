@@ -69,7 +69,7 @@
     }
 
     input[type="submit"]:hover {
-      background-color: #3b78c6;
+      background-color: #6c5b9e;
     }
 
     .error {
@@ -77,6 +77,47 @@
       font-size: 13px;
       margin-top: 10px;
       text-align: center;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #fdf2f2;
+      border: 1px solid #fecaca;
+    }
+
+    .validation-error {
+      color: #f39c12;
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #fef9e7;
+      border: 1px solid #fdeaa7;
+    }
+
+    .system-error {
+      color: #8e44ad;
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #f4f1f8;
+      border: 1px solid #d5b8e7;
+    }
+
+    .auth-error {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 10px;
+      text-align: center;
+      padding: 8px;
+      border-radius: 4px;
+      background-color: #fdf2f2;
+      border: 1px solid #fecaca;
+    }
+
+    .error-icon {
+      margin-right: 5px;
     }
   </style>
 
@@ -87,28 +128,81 @@
   <h2>Login</h2>
 
   <%
-    String error = request.getParameter("error");
-    if (error != null) {
+    String errorType = (String) request.getAttribute("error_type");
+    String errorMessage = (String) request.getAttribute("error_message");
+    String preservedUsername = (String) request.getAttribute("preserved_username");
+    
+    if (errorMessage != null && !errorMessage.trim().isEmpty()) {
+      String cssClass = "error";
+      String icon = "⚠️";
+      
+      if ("validation_error".equals(errorType)) {
+        cssClass = "validation-error";
+        icon = "⚠️";
+      } else if ("system_error".equals(errorType)) {
+        cssClass = "system-error";
+        icon = "🔧";
+      } else if ("auth_error".equals(errorType)) {
+        cssClass = "auth-error";
+        icon = "🔒";
+      }
   %>
-  <p class="error">Invalid username or password.</p>
+  <div class="<%= cssClass %>">
+    <span class="error-icon"><%= icon %></span>
+    <%= errorMessage %>
+  </div>
   <%
     }
   %>
 
-  <form action="LoginServlet" method="post">
-    <label>Username:</label>
-    <label>
-      <input type="text" name="username" required>
-    </label>
+  <form action="LoginServlet" method="post" onsubmit="return validateForm()">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" 
+           value="<%= preservedUsername != null ? preservedUsername : "" %>" 
+           required>
 
-    <label>Password:</label>
-    <label>
-      <input type="password" name="password" required>
-    </label>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
 
     <input type="submit" value="Login">
   </form>
 </div>
+
+<script>
+function validateForm() {
+  var username = document.getElementById('username').value.trim();
+  var password = document.getElementById('password').value.trim();
+  
+  if (username === '') {
+    alert('Please enter a username');
+    document.getElementById('username').focus();
+    return false;
+  }
+  
+  if (password === '') {
+    alert('Please enter a password');
+    document.getElementById('password').focus();
+    return false;
+  }
+  
+  return true;
+}
+
+// Clear error messages when user starts typing
+document.getElementById('username').addEventListener('input', function() {
+  var errorDiv = document.querySelector('.error, .validation-error, .system-error, .auth-error');
+  if (errorDiv) {
+    errorDiv.style.display = 'none';
+  }
+});
+
+document.getElementById('password').addEventListener('input', function() {
+  var errorDiv = document.querySelector('.error, .validation-error, .system-error, .auth-error');
+  if (errorDiv) {
+    errorDiv.style.display = 'none';
+  }
+});
+</script>
 
 </body>
 </html>
