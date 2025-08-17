@@ -11,8 +11,6 @@ import java.util.List;
 
 public class CustomerDAO {
 
-
-
     public boolean addCustomer(Customer customer) {
         String sql = "INSERT INTO customers (name, address, telephone) VALUES (?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
@@ -25,7 +23,6 @@ public class CustomerDAO {
 
             return stmt.executeUpdate() > 0;
 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,7 +45,6 @@ public class CustomerDAO {
         }
         return false;
     }
-
 
     public static boolean deleteCustomer(int accountNumber) {
         String sql = "DELETE FROM customers WHERE account_number = ?";
@@ -88,7 +84,6 @@ public class CustomerDAO {
 
         return customers;
     }
-
 
     public Customer getCustomerById(int accountNumber) {
         String sql = "SELECT * FROM customers WHERE account_number = ?";

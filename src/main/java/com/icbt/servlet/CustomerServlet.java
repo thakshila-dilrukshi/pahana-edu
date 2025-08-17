@@ -25,7 +25,6 @@ public class CustomerServlet extends HttpServlet {
         String address = request.getParameter("address");
         String telephone = request.getParameter("telephone");
 
-
         // Basic validation
         if (name == null || name.trim().isEmpty() ||
                 address == null || address.trim().isEmpty() ||
@@ -100,4 +99,3 @@ public class CustomerServlet extends HttpServlet {
         }
     }
 }
-
